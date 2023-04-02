@@ -1,11 +1,15 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Plant;
 import com.example.demo.repository.PlantRepository;
+import com.example.demo.vo.PlantVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 @Service
@@ -25,23 +29,25 @@ public class PlantService {
         plantRepository.deleteById(id);
     }
 
-    public void update(Long id, PlantUpdateVO vO) {
+    public void update(Long id, PlantVO vO) {
         Plant bean = requireOne(id);
         BeanUtils.copyProperties(vO, bean);
         plantRepository.save(bean);
     }
 
-    public PlantDTO getById(Long id) {
+    public PlantVO getById(Long id) {
         Plant original = requireOne(id);
-        return toDTO(original);
+        return toVO(original);
     }
 
-    public Page<PlantDTO> query(PlantQueryVO vO) {
+/*
+    public Page<PlantVO> query(PlantQueryVO vO) {
         throw new UnsupportedOperationException();
     }
+*/
 
-    private PlantDTO toDTO(Plant original) {
-        PlantDTO bean = new PlantDTO();
+    private PlantVO toVO(Plant original) {
+        PlantVO bean = new PlantVO();
         BeanUtils.copyProperties(original, bean);
         return bean;
     }
@@ -49,5 +55,16 @@ public class PlantService {
     private Plant requireOne(Long id) {
         return plantRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Resource not found: " + id));
+    }
+    public ArrayList<Plant> getAllByPlantGrowEnvironmentID( Long id) {
+        ArrayList<Plant> plants = new ArrayList<>();
+        plants = plantRepository.getAllByPlantGrowEnvironmentID(id);
+        return plants;
+    }
+
+    ArrayList<Plant> getAllByPlantGroupID( Long groupid){
+        ArrayList<Plant> plants = new ArrayList<>();
+        plants = plantRepository.getAllByPlantGroupID(groupid);
+        return plants;
     }
 }

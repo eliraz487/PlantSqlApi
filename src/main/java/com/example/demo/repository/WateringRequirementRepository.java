@@ -1,6 +1,12 @@
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+package com.example.demo.repository;
 
-public interface WateringRequirementRepository extends JpaRepository<WateringRequirement, Long>, JpaSpecificationExecutor<WateringRequirement> {
+import com.example.demo.entity.WateringRequirement;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface WateringRequirementRepository extends JpaRepository<WateringRequirement, Long> {
 
 }

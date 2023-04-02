@@ -1,9 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Ages;
 import com.example.demo.repository.AgesRepository;
+import com.example.demo.vo.AgesVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -25,23 +27,23 @@ public class AgesService {
         agesRepository.deleteById(id);
     }
 
-    public void update(Long id, AgesUpdateVO vO) {
+    public void update(Long id, AgesVO vO) {
         Ages bean = requireOne(id);
         BeanUtils.copyProperties(vO, bean);
         agesRepository.save(bean);
     }
 
-    public AgesDTO getById(Long id) {
+    public AgesVO getById(Long id) {
         Ages original = requireOne(id);
-        return toDTO(original);
+        return toVO(original);
     }
 
-    public Page<AgesDTO> query(AgesQueryVO vO) {
-        throw new UnsupportedOperationException();
-    }
+//    public Page<AgesVO> query(AgesQueryVO vO) {
+//        throw new UnsupportedOperationException();
+//    }
 
-    private AgesDTO toDTO(Ages original) {
-        AgesDTO bean = new AgesDTO();
+    private AgesVO toVO(Ages original) {
+        AgesVO bean = new AgesVO();
         BeanUtils.copyProperties(original, bean);
         return bean;
     }

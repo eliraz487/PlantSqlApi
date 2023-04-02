@@ -1,8 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.WateringRequirement;
 import com.example.demo.repository.WateringRequirementRepository;
+import com.example.demo.vo.WateringRequirementVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -25,23 +28,23 @@ public class WateringRequirementService {
         wateringRequirementRepository.deleteById(id);
     }
 
-    public void update(Long id, WateringRequirementUpdateVO vO) {
+    public void update(Long id, WateringRequirementVO vO) {
         WateringRequirement bean = requireOne(id);
         BeanUtils.copyProperties(vO, bean);
         wateringRequirementRepository.save(bean);
     }
 
-    public WateringRequirementDTO getById(Long id) {
+    public WateringRequirementVO getById(Long id) {
         WateringRequirement original = requireOne(id);
-        return toDTO(original);
+        return toVO(original);
     }
 
-    public Page<WateringRequirementDTO> query(WateringRequirementQueryVO vO) {
+/*    public Page<WateringRequirementVO> query(WateringRequirementVO vO) {
         throw new UnsupportedOperationException();
-    }
+    }*/
 
-    private WateringRequirementDTO toDTO(WateringRequirement original) {
-        WateringRequirementDTO bean = new WateringRequirementDTO();
+    private WateringRequirementVO toVO(WateringRequirement original) {
+        WateringRequirementVO bean = new WateringRequirementVO();
         BeanUtils.copyProperties(original, bean);
         return bean;
     }

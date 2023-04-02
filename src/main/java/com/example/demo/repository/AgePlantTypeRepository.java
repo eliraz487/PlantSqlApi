@@ -1,6 +1,12 @@
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+package com.example.demo.repository;
 
-public interface AgePlantTypeRepository extends JpaRepository<AgePlantType, Void>, JpaSpecificationExecutor<AgePlantType> {
+import com.example.demo.entity.AgePlantType;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+
+public interface AgePlantTypeRepository extends JpaRepository<AgePlantType, Long> {
 
 }

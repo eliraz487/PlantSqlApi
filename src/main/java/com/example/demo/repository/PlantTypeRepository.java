@@ -1,6 +1,12 @@
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+package com.example.demo.repository;
 
-public interface PlantTypeRepository extends JpaRepository<PlantType, Long>, JpaSpecificationExecutor<PlantType> {
+import com.example.demo.entity.PlantType;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface PlantTypeRepository extends JpaRepository<PlantType, Long> {
 
 }
