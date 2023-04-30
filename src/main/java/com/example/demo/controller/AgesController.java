@@ -27,8 +27,8 @@ public class AgesController {
 
     @DeleteMapping("")
    
-    public void delete(@Valid @NotNull@RequestParam Long id) {
-        agesService.delete(id);
+    public String delete(@Valid @NotNull@RequestParam Long id) {
+        return agesService.delete(id);
     }
 
     @PutMapping("")

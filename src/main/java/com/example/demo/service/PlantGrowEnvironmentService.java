@@ -3,13 +3,19 @@ package com.example.demo.service;
 import com.example.demo.entity.PlantGrowEnvironment;
 import com.example.demo.repository.PlantGrowEnvironmentRepository;
 import com.example.demo.vo.PlantGrowEnvironmentVO;
+import com.google.gson.Gson;
 import org.springframework.beans.BeanUtils;
+import com.google.gson.Gson;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+
 
 @Service
 public class PlantGrowEnvironmentService {
@@ -17,16 +23,28 @@ public class PlantGrowEnvironmentService {
     @Autowired
     private PlantGrowEnvironmentRepository plantGrowEnvironmentRepository;
 
-    public Long save(PlantGrowEnvironmentVO vO) {
+    public String save(PlantGrowEnvironmentVO vO) {
         PlantGrowEnvironment bean = new PlantGrowEnvironment();
         BeanUtils.copyProperties(vO, bean);
-
-        bean = plantGrowEnvironmentRepository.save(bean);
-        return bean.getId();
+        try {
+            // code to save the entity
+            bean = plantGrowEnvironmentRepository.save(bean);
+        } catch (DataIntegrityViolationException ex) {
+            return "failed : "+"\n" +ex.getMessage();
+        }
+        vO.setId(bean.getId());
+        Gson gson=new Gson();
+        return gson.toJson(vO);
     }
 
-    public void delete(Long id) {
-        plantGrowEnvironmentRepository.deleteById(id);
+
+    public String delete(Long id) {
+        Optional<PlantGrowEnvironment> optionalEntity = plantGrowEnvironmentRepository.findById(id);
+        if (!optionalEntity.isPresent()) {
+            return "PlantGrowEnvironment not found";
+        }
+        plantGrowEnvironmentRepository.delete(optionalEntity.get());
+        return "PlantGrowEnvironment deleted successfully";
     }
 
     public void update(Long id, PlantGrowEnvironmentVO vO) {

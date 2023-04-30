@@ -4,12 +4,15 @@ import com.example.demo.entity.WateringRequirement;
 import com.example.demo.repository.WateringRequirementRepository;
 import com.example.demo.vo.WateringRequirementVO;
 import org.springframework.beans.BeanUtils;
+import com.google.gson.Gson;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class WateringRequirementService {
@@ -17,15 +20,29 @@ public class WateringRequirementService {
     @Autowired
     private WateringRequirementRepository wateringRequirementRepository;
 
-    public Long save(WateringRequirementVO vO) {
+    public String save(WateringRequirementVO vO) {
         WateringRequirement bean = new WateringRequirement();
         BeanUtils.copyProperties(vO, bean);
-        bean = wateringRequirementRepository.save(bean);
-        return bean.getId();
+        try {
+            // code to save the entity
+            bean = wateringRequirementRepository.save(bean);
+        } catch (DataIntegrityViolationException ex) {
+            return "failed : "+"\n" +ex.getMessage();
+        }
+        vO.setId(bean.getId());
+        Gson gson=new Gson();
+        return gson.toJson(vO);
     }
 
-    public void delete(Long id) {
-        wateringRequirementRepository.deleteById(id);
+
+
+    public String delete(Long id) {
+        Optional<WateringRequirement> optionalEntity = wateringRequirementRepository.findById(id);
+        if (!optionalEntity.isPresent()) {
+            return "WateringRequirement not found";
+        }
+        wateringRequirementRepository.delete(optionalEntity.get());
+        return "WateringRequirement deleted successfully";
     }
 
     public void update(Long id, WateringRequirementVO vO) {

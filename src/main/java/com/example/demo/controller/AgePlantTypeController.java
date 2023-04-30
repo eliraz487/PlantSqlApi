@@ -27,8 +27,8 @@ public class AgePlantTypeController {
 
     @DeleteMapping("")
    
-    public void delete(@Valid @NotNull@RequestParam Long id) {
-        agePlantTypeService.delete(id);
+    public String delete(@Valid @NotNull@RequestParam Long id) {
+        return agePlantTypeService.delete(id);
     }
 
     @PutMapping("")

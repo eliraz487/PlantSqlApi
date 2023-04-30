@@ -3,12 +3,14 @@ package com.example.demo.service;
 import com.example.demo.entity.AgePlantType;
 import com.example.demo.repository.AgePlantTypeRepository;
 import com.example.demo.vo.AgePlantTypeVO;
+import com.google.gson.Gson;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class AgePlantTypeService {
@@ -20,16 +22,30 @@ public class AgePlantTypeService {
         this.agePlantTypeRepository = agePlantTypeRepository;
     }
 
-    public Long save(AgePlantTypeVO vO) {
+    public String save(AgePlantTypeVO vO) {
         AgePlantType bean = new AgePlantType();
         BeanUtils.copyProperties(vO, bean);
-        bean = agePlantTypeRepository.save(bean);
-        return bean.getId();
+        try {
+            // code to save the entity
+            bean = agePlantTypeRepository.save(bean);
+        } catch (DataIntegrityViolationException ex) {
+            return "failed : " + "\n" + ex.getMessage();
+        }
+        vO.setId(bean.getId());
+        Gson gson = new Gson();
+        return gson.toJson(vO);
     }
 
-    public void delete(Long id) {
-        agePlantTypeRepository.deleteById(id);
+
+    public String delete(Long id) {
+        Optional<AgePlantType> optionalEntity = agePlantTypeRepository.findById(id);
+        if (!optionalEntity.isPresent()) {
+            return "AgePlantType not found";
+        }
+        agePlantTypeRepository.delete(optionalEntity.get());
+        return "AgePlantType deleted successfully";
     }
+
 
     public void update(Long id, AgePlantTypeVO vO) {
         AgePlantType bean = requireOne(id);

@@ -27,8 +27,8 @@ public class WateringRequirementController {
 
     @DeleteMapping("")
    
-    public void delete(@Valid @NotNull@RequestParam Long id) {
-        wateringRequirementService.delete(id);
+    public String delete(@Valid @NotNull@RequestParam Long id) {
+        return wateringRequirementService.delete(id);
     }
 
     @PutMapping("")

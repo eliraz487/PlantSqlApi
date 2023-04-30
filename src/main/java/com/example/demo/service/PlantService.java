@@ -4,6 +4,8 @@ import com.example.demo.entity.Plant;
 import com.example.demo.repository.PlantRepository;
 import com.example.demo.vo.PlantVO;
 import org.springframework.beans.BeanUtils;
+import com.google.gson.Gson;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.repository.query.Param;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class PlantService {
@@ -18,15 +21,28 @@ public class PlantService {
     @Autowired
     private PlantRepository plantRepository;
 
-    public Long save(PlantVO vO) {
+    public String save(PlantVO vO) {
         Plant bean = new Plant();
         BeanUtils.copyProperties(vO, bean);
-        bean = plantRepository.save(bean);
-        return bean.getId();
+        try {
+            // code to save the entity
+            bean = plantRepository.save(bean);
+        } catch (DataIntegrityViolationException ex) {
+            return "failed : "+"\n" +ex.getMessage();
+        }
+        vO.setId(bean.getId());
+        Gson gson=new Gson();
+        return gson.toJson(vO);
     }
 
-    public void delete(Long id) {
-        plantRepository.deleteById(id);
+
+    public String delete(Long id) {
+        Optional<Plant> optionalEntity = plantRepository.findById(id);
+        if (!optionalEntity.isPresent()) {
+            return "Plant not found";
+        }
+        plantRepository.delete(optionalEntity.get());
+        return "Plant deleted successfully";
     }
 
     public void update(Long id, PlantVO vO) {

@@ -28,8 +28,8 @@ public class PlantController {
 
     @DeleteMapping("")
    
-    public void delete(@Valid @NotNull@RequestParam Long id) {
-        plantService.delete(id);
+    public String delete(@Valid @NotNull@RequestParam Long id) {
+        return plantService.delete(id);
     }
 
     @PutMapping("")

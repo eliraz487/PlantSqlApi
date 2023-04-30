@@ -27,8 +27,8 @@ public class PlantGroupController {
 
     @DeleteMapping("")
    
-    public void delete(@Valid @NotNull@RequestParam Long id) {
-        plantGroupService.delete(id);
+    public String delete(@Valid @NotNull@RequestParam Long id) {
+        return plantGroupService.delete(id);
     }
 
     @PutMapping("")
