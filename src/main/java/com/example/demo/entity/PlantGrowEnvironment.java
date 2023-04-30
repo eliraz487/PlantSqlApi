@@ -38,9 +38,6 @@ public class PlantGrowEnvironment implements Serializable {
     private String name;
     @Basic(optional = false)
     @Column(nullable = false)
-    private boolean isDeleted;
-    @Basic(optional = false)
-    @Column(nullable = false)
     private long userOwnerID;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "plantGrowEnvironmentID")
     private List<PlantGroup> plantGroupList;
