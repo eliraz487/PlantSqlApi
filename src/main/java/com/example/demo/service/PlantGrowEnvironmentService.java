@@ -20,6 +20,7 @@ public class PlantGrowEnvironmentService {
     public Long save(PlantGrowEnvironmentVO vO) {
         PlantGrowEnvironment bean = new PlantGrowEnvironment();
         BeanUtils.copyProperties(vO, bean);
+
         bean = plantGrowEnvironmentRepository.save(bean);
         return bean.getId();
     }
