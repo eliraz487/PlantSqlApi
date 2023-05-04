@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.PlantType;
 import com.example.demo.repository.PlantTypeRepository;
+import com.example.demo.vo.PlantGrowEnvironmentVO;
 import com.example.demo.vo.PlantTypeVO;
 import org.springframework.beans.BeanUtils;
 import com.google.gson.Gson;
@@ -69,5 +70,10 @@ public class PlantTypeService {
     private PlantType requireOne(Long id) {
         return plantTypeRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Resource not found: " + id));
+    }
+   private String isValidation(PlantTypeVO vO) {
+        String result="";
+      
+        return result;
     }
 }

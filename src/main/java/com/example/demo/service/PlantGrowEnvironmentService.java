@@ -5,11 +5,9 @@ import com.example.demo.repository.PlantGrowEnvironmentRepository;
 import com.example.demo.vo.PlantGrowEnvironmentVO;
 import com.google.gson.Gson;
 import org.springframework.beans.BeanUtils;
-import com.google.gson.Gson;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,6 +22,10 @@ public class PlantGrowEnvironmentService {
     private PlantGrowEnvironmentRepository plantGrowEnvironmentRepository;
 
     public String save(PlantGrowEnvironmentVO vO) {
+        String validerror="";
+        if ((validerror=isValidation(vO)).equals("")){
+            return "failed : "+"\n" +validerror;
+        }
         PlantGrowEnvironment bean = new PlantGrowEnvironment();
         BeanUtils.copyProperties(vO, bean);
         try {
@@ -37,6 +39,15 @@ public class PlantGrowEnvironmentService {
         return gson.toJson(vO);
     }
 
+    private String isValidation(PlantGrowEnvironmentVO vO) {
+        String result="";
+        Optional<Long> id= Optional.ofNullable(vO.getUserOwnerID());
+        if (!id.isPresent()){
+            result = result + "userOwnerID can be null";
+        }
+        return result;
+    }
+
 
     public String delete(Long id) {
         Optional<PlantGrowEnvironment> optionalEntity = plantGrowEnvironmentRepository.findById(id);
@@ -47,10 +58,16 @@ public class PlantGrowEnvironmentService {
         return "PlantGrowEnvironment deleted successfully";
     }
 
-    public void update(Long id, PlantGrowEnvironmentVO vO) {
+    public String update(Long id, PlantGrowEnvironmentVO vO) {
+        String validerror="";
+        if ((validerror=isValidation(vO)).equals("")){
+            return "failed : "+"\n" +validerror;
+        }
         PlantGrowEnvironment bean = requireOne(id);
         BeanUtils.copyProperties(vO, bean);
         plantGrowEnvironmentRepository.save(bean);
+        Gson gson=new Gson();
+        return gson.toJson(vO);
     }
 
     public PlantGrowEnvironmentVO getById(Long id) {
@@ -83,8 +100,8 @@ public class PlantGrowEnvironmentService {
         return ownerplantGrowEnvironments;
     }
 // getAllUserPlantGrowEnvironment
-    public PlantGrowEnvironment getByNameAndUserID(String name,Long ownerID){
-        PlantGrowEnvironment plantGrowEnvironment=new PlantGrowEnvironment();
+    public Optional<PlantGrowEnvironmentVO> getByNameAndUserID(String name, Long ownerID){
+        Optional<PlantGrowEnvironmentVO> plantGrowEnvironment;
         plantGrowEnvironment =plantGrowEnvironmentRepository.findByNameAndUserOwnerID(name,ownerID);
         return plantGrowEnvironment;
     }

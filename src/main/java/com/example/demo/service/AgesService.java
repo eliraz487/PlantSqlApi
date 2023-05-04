@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.entity.Ages;
 import com.example.demo.repository.AgesRepository;
 import com.example.demo.vo.AgesVO;
+import com.example.demo.vo.PlantGrowEnvironmentVO;
 import com.google.gson.Gson;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.beans.BeanUtils;
@@ -69,4 +70,11 @@ public class AgesService {
         return agesRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Resource not found: " + id));
     }
+
+   private String isValidation(AgesVO vO) {
+        String result="";
+      
+        return result;
+    }
+
 }

@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.entity.AgePlantType;
 import com.example.demo.repository.AgePlantTypeRepository;
 import com.example.demo.vo.AgePlantTypeVO;
+import com.example.demo.vo.PlantGrowEnvironmentVO;
 import com.google.gson.Gson;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,10 @@ public class AgePlantTypeService {
     }
 
     public String save(AgePlantTypeVO vO) {
+        String validerror="";
+        if ((validerror=isValidation(vO)).equals("")){
+            return "failed : "+"\n" +validerror;
+        }
         AgePlantType bean = new AgePlantType();
         BeanUtils.copyProperties(vO, bean);
         try {
@@ -35,6 +40,8 @@ public class AgePlantTypeService {
         Gson gson = new Gson();
         return gson.toJson(vO);
     }
+
+   
 
 
     public String delete(Long id) {
@@ -73,5 +80,11 @@ public class AgePlantTypeService {
     private AgePlantType requireOne(Long id) {
         return agePlantTypeRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Resource not found: " + id));
+    }
+
+   private String isValidation(AgePlantTypeVO vO) {
+        String result="";
+      
+        return result;
     }
 }

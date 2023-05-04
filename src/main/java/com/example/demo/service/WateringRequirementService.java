@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.entity.WateringRequirement;
 import com.example.demo.repository.WateringRequirementRepository;
 import com.example.demo.vo.WateringRequirementVO;
+import com.example.demo.vo.WateringRequirementVO;
 import org.springframework.beans.BeanUtils;
 import com.google.gson.Gson;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,7 +23,7 @@ public class WateringRequirementService {
 
     public String save(WateringRequirementVO vO) {
         WateringRequirement bean = new WateringRequirement();
-        BeanUtils.copyProperties(vO, bean);
+        BeanUtils.copyProperties(bean, vO);
         try {
             // code to save the entity
             bean = wateringRequirementRepository.save(bean);
@@ -69,5 +70,10 @@ public class WateringRequirementService {
     private WateringRequirement requireOne(Long id) {
         return wateringRequirementRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Resource not found: " + id));
+    }
+    private String isValidation(WateringRequirementVO vO) {
+        String result="";
+
+        return result;
     }
 }

@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Plant;
 import com.example.demo.repository.PlantRepository;
+import com.example.demo.vo.PlantGrowEnvironmentVO;
 import com.example.demo.vo.PlantVO;
 import org.springframework.beans.BeanUtils;
 import com.google.gson.Gson;
@@ -82,5 +83,10 @@ public class PlantService {
         ArrayList<Plant> plants = new ArrayList<>();
         plants = plantRepository.getAllByPlantGroupID(groupid);
         return plants;
+    }
+   private String isValidation(Plant vO) {
+        String result="";
+      
+        return result;
     }
 }

@@ -19,7 +19,7 @@ public class AgePlantTypeController {
     @Autowired
     private AgePlantTypeService agePlantTypeService;
 
-    @PostMapping
+    @PostMapping("/save")
     
     public String save(@Valid @RequestBody AgePlantTypeVO vO) {
         return agePlantTypeService.save(vO).toString();

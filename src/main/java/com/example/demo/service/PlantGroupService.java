@@ -4,6 +4,7 @@ package com.example.demo.service;
 import com.example.demo.entity.PlantGroup;
 import com.example.demo.repository.PlantGroupRepository;
 import com.example.demo.vo.PlantGroupVO;
+import com.example.demo.vo.PlantGrowEnvironmentVO;
 import org.springframework.beans.BeanUtils;
 import com.google.gson.Gson;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -83,5 +84,9 @@ public class PlantGroupService {
         return ownerPlantGroups;
     }
 
-
+   private String isValidation(PlantGroup vO) {
+        String result="";
+      
+        return result;
+    }
 }
