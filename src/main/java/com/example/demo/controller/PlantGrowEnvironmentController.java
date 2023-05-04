@@ -24,7 +24,7 @@ public class PlantGrowEnvironmentController {
 
     @DeleteMapping("")
     public String delete(@Valid @NotNull @RequestParam("id") Long id) {
-        plantGrowEnvironmentService.delete(id);
+        return plantGrowEnvironmentService.delete(id);
     }
 
     @PutMapping("")

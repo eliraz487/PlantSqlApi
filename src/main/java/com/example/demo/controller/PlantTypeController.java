@@ -28,7 +28,7 @@ public class PlantTypeController {
     @DeleteMapping("")
    
     public String delete(@Valid @NotNull @RequestParam Long id) {
-        plantTypeService.delete(id);
+        return plantTypeService.delete(id);
     }
 
     @PutMapping("")
