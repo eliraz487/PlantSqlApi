@@ -35,7 +35,7 @@ public class WateringRequirementController {
    
     public String update(@Valid @NotNull@RequestParam Long id,
                        @Valid @RequestBody WateringRequirementVO vO) {
-        wateringRequirementService.update(id, vO);
+        return wateringRequirementService.update(id, vO);
     }
 
     @GetMapping("")

@@ -35,7 +35,7 @@ public class AgesController {
    
     public String update(@Valid @NotNull@RequestParam Long id,
                        @Valid @RequestBody AgesVO vO) {
-        agesService.update(id, vO);
+        return agesService.update(id, vO);
     }
 
     @GetMapping("")

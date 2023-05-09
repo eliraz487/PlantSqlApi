@@ -2,12 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.service.PlantService;
 import com.example.demo.vo.PlantVO;
-
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +33,7 @@ public class PlantController {
    
     public String update(@Valid @NotNull@RequestParam Long id,
                        @Valid @RequestBody PlantVO vO) {
-        plantService.update(id, vO);
+        return plantService.update(id, vO);
     }
 
     @GetMapping("")

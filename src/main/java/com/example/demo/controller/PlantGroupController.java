@@ -35,7 +35,7 @@ public class PlantGroupController {
    
     public String update(@Valid @NotNull@RequestParam Long id,
                        @Valid @RequestBody PlantGroupVO vO) {
-        plantGroupService.update(id, vO);
+        return plantGroupService.update(id, vO);
     }
 
     @GetMapping("")

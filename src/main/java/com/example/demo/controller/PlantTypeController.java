@@ -35,7 +35,7 @@ public class PlantTypeController {
    
     public String update(@Valid @NotNull @RequestParam Long id,
                        @Valid @RequestBody PlantTypeVO vO) {
-        plantTypeService.update(id, vO);
+        return plantTypeService.update(id, vO);
     }
 
     @GetMapping("")

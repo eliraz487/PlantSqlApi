@@ -35,7 +35,7 @@ public class AgePlantTypeController {
    
     public String update(@Valid @NotNull@RequestParam Long id,
                        @Valid @RequestBody AgePlantTypeVO vO) {
-        agePlantTypeService.update(id, vO);
+       return agePlantTypeService.update(id, vO);
     }
 
     @GetMapping("")
