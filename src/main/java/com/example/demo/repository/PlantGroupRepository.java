@@ -1,7 +1,6 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.PlantGroup;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.jpa.repository.Query;
@@ -16,7 +15,7 @@ import java.util.Optional;
 
 public interface PlantGroupRepository extends JpaRepository<PlantGroup, Long> {
     @Query("select e from PlantGroup e where e.name=:name and e.plantGrowEnvironmentID.id=:id and e.isDeleted=false ")
-     PlantGroup getByNameAndPlantGrowEnvironmentID(@Param("name")String name ,@Param("id")Long id);
+    PlantGroup getByNameAndPlantGrowEnvironmentID(@Param("name")String name , @Param("id")Long id);
     //getByNameAndPlantGrowEnvironmentID
     //getAllPlantGroupByPlantGrowEnvironmentID
     @Query("select e from PlantGroup e where e.plantGrowEnvironmentID.id=:id and e.isDeleted=false")
@@ -25,10 +24,5 @@ public interface PlantGroupRepository extends JpaRepository<PlantGroup, Long> {
     @Override
     @Query("SELECT p FROM PlantGroup p WHERE p.id = :id AND p.isDeleted = false")
     Optional<PlantGroup> findById(@Param("id") Long id);
-    @Override
-    @Transactional
-    default void delete(PlantGroup PlantGroup) {
-        PlantGroup.setDeleted(true);
-        save(PlantGroup);
-    }
+
 }

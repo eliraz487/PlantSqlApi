@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.entity.PlantType;
 import com.example.demo.repository.PlantTypeRepository;
-import com.example.demo.vo.PlantGrowEnvironmentVO;
 import com.example.demo.vo.PlantTypeVO;
 import org.springframework.beans.BeanUtils;
 import com.google.gson.Gson;
@@ -44,10 +43,16 @@ public class PlantTypeService {
         return "PlantType deleted successfully";
     }
 
-    public void update(Long id, PlantTypeVO vO) {
+    public String update(Long id, PlantTypeVO vO) {
+        String validerror="";
+        if (!(validerror=isValidation(vO)).equals("")){
+            return "failed : "+"\n" +validerror;
+        }
         PlantType bean = requireOne(id);
         BeanUtils.copyProperties(vO, bean);
         plantTypeRepository.save(bean);
+        Gson gson=new Gson();
+        return gson.toJson(vO);
     }
 
     public PlantTypeVO getById(Long id) {

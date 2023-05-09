@@ -4,7 +4,6 @@ package com.example.demo.service;
 import com.example.demo.entity.PlantGroup;
 import com.example.demo.repository.PlantGroupRepository;
 import com.example.demo.vo.PlantGroupVO;
-import com.example.demo.vo.PlantGrowEnvironmentVO;
 import org.springframework.beans.BeanUtils;
 import com.google.gson.Gson;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -45,10 +44,16 @@ public class PlantGroupService {
         return "PlantGroup deleted successfully";
     }
 
-    public void update(Long id, PlantGroupVO vO) {
+    public String update(Long id, PlantGroupVO vO) {
+        String validerror="";
+        if (!(validerror=isValidation(vO)).equals("")){
+            return "failed : "+"\n" +validerror;
+        }
         PlantGroup bean = requireOne(id);
         BeanUtils.copyProperties(vO, bean);
         plantGroupRepository.save(bean);
+        Gson gson=new Gson();
+        return gson.toJson(vO);
     }
 
     public PlantGroupVO getById(Long id) {
@@ -84,7 +89,7 @@ public class PlantGroupService {
         return ownerPlantGroups;
     }
 
-   private String isValidation(PlantGroup vO) {
+   private String isValidation(PlantGroupVO vO) {
         String result="";
       
         return result;

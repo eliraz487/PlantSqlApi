@@ -33,7 +33,7 @@ public class PlantTypeController {
 
     @PutMapping("")
    
-    public void update(@Valid @NotNull @RequestParam Long id,
+    public String update(@Valid @NotNull @RequestParam Long id,
                        @Valid @RequestBody PlantTypeVO vO) {
         plantTypeService.update(id, vO);
     }

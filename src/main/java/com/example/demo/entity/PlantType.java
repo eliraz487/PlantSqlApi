@@ -1,57 +1,48 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.example.demo.entity;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
-
+import lombok.Data;import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author manra
  */
-
-@Entity
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@NoArgsConstructor
-@Table(catalog = "Plants", schema = "dbo", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"Name"})})
 @Data
+@Table(name = "PlantType")
+@Entity
 public class PlantType implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
+    @Column(name = "ID")
     private Long id;
     @Basic(optional = false)
-    @Column(nullable = false)
+    @Column(name = "Name")
     private String name;
     @Basic(optional = false)
-    @Column(nullable = false, length = 10)
+    @Column(name = "familyID")
     private String familyID;
-    @Column(length = 2147483647)
+    @Column(name = "url")
     private String url;
     @Lob
-    @Column(length = 2147483647)
+    @Column(name = "description")
     private String description;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "plantTypeID")
     private List<AgePlantType> agePlantTypeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "plantTypeID")
-    private List<WateringRequirement> wateringRequirementList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeID")
     private List<Plant> plantList;
-
-
 
 }

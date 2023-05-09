@@ -33,7 +33,7 @@ public class AgePlantTypeController {
 
     @PutMapping("")
    
-    public void update(@Valid @NotNull@RequestParam Long id,
+    public String update(@Valid @NotNull@RequestParam Long id,
                        @Valid @RequestBody AgePlantTypeVO vO) {
         agePlantTypeService.update(id, vO);
     }

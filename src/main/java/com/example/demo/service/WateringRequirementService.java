@@ -3,13 +3,11 @@ package com.example.demo.service;
 import com.example.demo.entity.WateringRequirement;
 import com.example.demo.repository.WateringRequirementRepository;
 import com.example.demo.vo.WateringRequirementVO;
-import com.example.demo.vo.WateringRequirementVO;
 import org.springframework.beans.BeanUtils;
 import com.google.gson.Gson;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -46,10 +44,16 @@ public class WateringRequirementService {
         return "WateringRequirement deleted successfully";
     }
 
-    public void update(Long id, WateringRequirementVO vO) {
+    public String update(Long id, WateringRequirementVO vO) {
+        String validerror="";
+        if (!(validerror=isValidation(vO)).equals("")){
+            return "failed : "+"\n" +validerror;
+        }
         WateringRequirement bean = requireOne(id);
         BeanUtils.copyProperties(vO, bean);
         wateringRequirementRepository.save(bean);
+        Gson gson=new Gson();
+        return gson.toJson(vO);
     }
 
     public WateringRequirementVO getById(Long id) {

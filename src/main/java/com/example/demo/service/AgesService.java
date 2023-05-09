@@ -3,7 +3,6 @@ package com.example.demo.service;
 import com.example.demo.entity.Ages;
 import com.example.demo.repository.AgesRepository;
 import com.example.demo.vo.AgesVO;
-import com.example.demo.vo.PlantGrowEnvironmentVO;
 import com.google.gson.Gson;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.beans.BeanUtils;
@@ -45,10 +44,16 @@ public class AgesService {
         return "Age deleted successfully";
     }
 
-    public void update(Long id, AgesVO vO) {
+    public String update(Long id, AgesVO vO) {
+        String validerror="";
+        if (!(validerror=isValidation(vO)).equals("")){
+            return "failed : "+"\n" +validerror;
+        }
         Ages bean = requireOne(id);
         BeanUtils.copyProperties(vO, bean);
         agesRepository.save(bean);
+        Gson gson=new Gson();
+        return gson.toJson(vO);
     }
 
     public AgesVO getById(Long id) {

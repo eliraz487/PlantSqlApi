@@ -23,7 +23,7 @@ public class PlantGrowEnvironmentService {
 
     public String save(PlantGrowEnvironmentVO vO) {
         String validerror="";
-        if ((validerror=isValidation(vO)).equals("")){
+        if (!(validerror=isValidation(vO)).equals("")){
             return "failed : "+"\n" +validerror;
         }
         PlantGrowEnvironment bean = new PlantGrowEnvironment();
@@ -60,7 +60,7 @@ public class PlantGrowEnvironmentService {
 
     public String update(Long id, PlantGrowEnvironmentVO vO) {
         String validerror="";
-        if ((validerror=isValidation(vO)).equals("")){
+        if (!(validerror=isValidation(vO)).equals("")){
             return "failed : "+"\n" +validerror;
         }
         PlantGrowEnvironment bean = requireOne(id);

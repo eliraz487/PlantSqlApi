@@ -2,14 +2,12 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Plant;
 import com.example.demo.repository.PlantRepository;
-import com.example.demo.vo.PlantGrowEnvironmentVO;
 import com.example.demo.vo.PlantVO;
 import org.springframework.beans.BeanUtils;
 import com.google.gson.Gson;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -46,10 +44,16 @@ public class PlantService {
         return "Plant deleted successfully";
     }
 
-    public void update(Long id, PlantVO vO) {
+    public String update(Long id, PlantVO vO) {
+        String validerror="";
+        if (!(validerror=isValidation(vO)).equals("")){
+            return "failed : "+"\n" +validerror;
+        }
         Plant bean = requireOne(id);
         BeanUtils.copyProperties(vO, bean);
         plantRepository.save(bean);
+        Gson gson=new Gson();
+        return gson.toJson(vO);
     }
 
     public PlantVO getById(Long id) {
@@ -73,7 +77,7 @@ public class PlantService {
         return plantRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Resource not found: " + id));
     }
-    public ArrayList<Plant> getAllByPlantGrowEnvironmentID( Long id) {
+    public ArrayList<Plant> getAllByPlantGrowEnvironmentID(Long id) {
         ArrayList<Plant> plants = new ArrayList<>();
         plants = plantRepository.getAllByPlantGrowEnvironmentID(id);
         return plants;
@@ -84,7 +88,7 @@ public class PlantService {
         plants = plantRepository.getAllByPlantGroupID(groupid);
         return plants;
     }
-   private String isValidation(Plant vO) {
+   private String isValidation(PlantVO vO) {
         String result="";
       
         return result;

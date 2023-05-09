@@ -33,7 +33,7 @@ public class WateringRequirementController {
 
     @PutMapping("")
    
-    public void update(@Valid @NotNull@RequestParam Long id,
+    public String update(@Valid @NotNull@RequestParam Long id,
                        @Valid @RequestBody WateringRequirementVO vO) {
         wateringRequirementService.update(id, vO);
     }
