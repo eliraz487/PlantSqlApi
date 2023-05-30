@@ -18,7 +18,7 @@ public class AgesService {
     @Autowired
     private AgesRepository agesRepository;
 
-    public String save(AgesVO vO) {
+    public synchronized String save(AgesVO vO) {
         String validerror="";
         if (!(validerror=isValidation(vO)).equals("")){
             return "failed : "+"\n" +validerror;
@@ -80,7 +80,10 @@ public class AgesService {
 
    private String isValidation(AgesVO vO) {
         String result="";
-      
+        if (vO.getName()==null|| vO.getName().equals(""))
+        {
+            return "the name can't be null";
+        }
         return result;
     }
 

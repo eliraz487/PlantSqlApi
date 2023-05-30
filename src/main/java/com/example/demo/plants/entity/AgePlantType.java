@@ -4,15 +4,29 @@
  */
 package com.example.demo.plants.entity;
 
+import com.example.demo.sensor.entity.CheckRequirement;
+import com.example.demo.sensor.entity.PlantDataProcessing;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import jakarta.persistence.Basic;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 /**
  *
@@ -23,12 +37,12 @@ import java.util.List;
 @Builder
 @Data
 @Entity
-@Table(name = "AgePlantType")
-
-public class AgePlantType implements Serializable {
+@Table(name = "AgePlantType", schema = "dbo", catalog = "Plants")
+public class AgePlantType  implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
@@ -47,6 +61,10 @@ public class AgePlantType implements Serializable {
     @ManyToOne(optional = false)
     private PlantType plantTypeID;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "agePlantTypeID")
+    private List<CheckRequirement> checkRequirementList;
+    @OneToMany(mappedBy = "agePlantType")
     private List<WateringRequirement> wateringRequirementList;
-    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "plantAgePlantTypeID")
+    private List<PlantDataProcessing> plantDataProcessingList;
+
 }

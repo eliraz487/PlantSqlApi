@@ -22,20 +22,20 @@ public class CheckTableController {
 
     @PostMapping("/save")
 
-    public String save(@jakarta.validation.Valid @RequestBody CheckTableVO vO) {
+    public String save(@Valid @RequestBody CheckTableVO vO) {
         return CheckTableService.save(vO).toString();
     }
 
     @DeleteMapping("")
 
-    public String delete(@jakarta.validation.Valid @com.sun.istack.NotNull @RequestParam Long id) {
+    public String delete(@Valid @com.sun.istack.NotNull @RequestParam Long id) {
         return CheckTableService.delete(id);
     }
 
     @PutMapping("")
 
-    public String update(@jakarta.validation.Valid @com.sun.istack.NotNull @RequestParam Long id,
-                         @jakarta.validation.Valid @RequestBody CheckTableVO vO) {
+    public String update(@Valid @com.sun.istack.NotNull @RequestParam Long id,
+                         @Valid @RequestBody CheckTableVO vO) {
         return CheckTableService.update(id, vO);
     }
 

@@ -22,20 +22,20 @@ public class SensorController {
 
     @PostMapping("/save")
 
-    public String save(@jakarta.validation.Valid @RequestBody SensorVO vO) {
+    public String save(@Valid @RequestBody SensorVO vO) {
         return SensorService.save(vO).toString();
     }
 
     @DeleteMapping("")
 
-    public String delete(@jakarta.validation.Valid @com.sun.istack.NotNull @RequestParam Long id) {
+    public String delete(@Valid @com.sun.istack.NotNull @RequestParam Long id) {
         return SensorService.delete(id);
     }
 
     @PutMapping("")
 
-    public String update(@jakarta.validation.Valid @com.sun.istack.NotNull @RequestParam Long id,
-                         @jakarta.validation.Valid @RequestBody SensorVO vO) {
+    public String update(@Valid @com.sun.istack.NotNull @RequestParam Long id,
+                         @Valid @RequestBody SensorVO vO) {
         return SensorService.update(id, vO);
     }
 

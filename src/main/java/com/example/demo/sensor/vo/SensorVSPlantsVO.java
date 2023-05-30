@@ -8,14 +8,13 @@ import java.io.Serializable;
 
 
 @Data
-public class SensorVSGroupVO implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class SensorVSPlantsVO implements Serializable {
 
     @NotNull(message = "id can not null")
     private Long id;
 
-    @NotNull(message = "groupID can not null")
-    private Long groupID;
+    @NotNull(message = "plantID can not null")
+    private Long plantID;
 
     @NotNull(message = "sensorID can not null")
     private Long sensorID;

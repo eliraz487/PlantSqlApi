@@ -11,16 +11,17 @@ import java.util.Optional;
 
 @Repository
 
-public interface PlantGroupRepository extends JpaRepository<PlantGroup, Long> {
-    @Query("select e from PlantGroup e where e.name=:name and e.plantGrowEnvironmentID.id=:id and e.isDeleted=false ")
+public interface
+PlantGroupRepository extends JpaRepository<PlantGroup, Long> {
+    @Query("select e from PlantGroup e where e.name=:name and e.plantGrowEnvironmentID.id=:id ")
     PlantGroup getByNameAndPlantGrowEnvironmentID(@Param("name")String name , @Param("id")Long id);
     //getByNameAndPlantGrowEnvironmentID
     //getAllPlantGroupByPlantGrowEnvironmentID
-    @Query("select e from PlantGroup e where e.plantGrowEnvironmentID.id=:id and e.isDeleted=false")
+    @Query("select e from PlantGroup e where e.plantGrowEnvironmentID.id=:id")
      ArrayList<PlantGroup> getAllPlantGroupByPlantGrowEnvironmentID(@Param("id")Long id);
 
     @Override
-    @Query("SELECT p FROM PlantGroup p WHERE p.id = :id AND p.isDeleted = false")
+    @Query("SELECT p FROM PlantGroup p WHERE p.id = :id ")
     Optional<PlantGroup> findById(@Param("id") Long id);
 
 }

@@ -2,28 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.example.demo.plants.entity;
+package com.example.demo.sensor.entity;
 
+import com.example.demo.plants.entity.AgePlantType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
 import jakarta.persistence.Basic;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**
@@ -35,7 +30,8 @@ import jakarta.persistence.Table;
 @Builder
 @Data
 @Entity
-public class PlantGroup implements Serializable {
+@Table(name = "CheckRequirement",schema = "dbo")
+public class CheckRequirement implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,17 +39,18 @@ public class PlantGroup implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
-    @Basic(optional = false)
-    @Lob
-    @Column(name = "name")
-    private String name;
-    @Lob
-    @Column(name = "description")
-    private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "plantGroupID")
-    private List<Plant> plantList;
-    @JoinColumn(name = "PlantGrowEnvironmentID", referencedColumnName = "ID")
+    @Column(name = "CheckID")
+    private Integer checkID;
+    @Column(name = "MaxRecommendValue")
+    private Integer maxRecommendValue;
+    @Column(name = "MinRecommendValue")
+    private Integer minRecommendValue;
+    @Column(name = "MaxValidValue")
+    private Integer maxValidValue;
+    @Column(name = "MinValidValue")
+    private Integer minValidValue;
+    @JoinColumn(name = "AgePlantTypeID", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private PlantGrowEnvironment plantGrowEnvironmentID;
+    private AgePlantType agePlantTypeID;
 
 }

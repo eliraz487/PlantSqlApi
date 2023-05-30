@@ -4,14 +4,31 @@
  */
 package com.example.demo.plants.entity;
 
+import com.example.demo.sensor.entity.SensorVSPlants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import jakarta.persistence.Basic;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 /**
  *
@@ -21,8 +38,8 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Data
-@Table(name = "Plant")
 @Entity
+@Table(name = "Plant")
 public class Plant implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,5 +64,7 @@ public class Plant implements Serializable {
     @JoinColumn(name = "TypeID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private PlantType typeID;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "plantID")
+    private List<SensorVSPlants> sensorVSPlantsList;
 
 }

@@ -9,8 +9,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
  *
@@ -20,8 +28,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder
 @Data
-@Table(name = "WateringRequirement")
 @Entity
+@Table(name = "WateringRequirement")
 public class WateringRequirement implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,19 +39,10 @@ public class WateringRequirement implements Serializable {
     @Column(name = "ID")
     private Long id;
     @Basic(optional = false)
-    @Column(name = "PhFrom")
-    private double phFrom;
-    @Basic(optional = false)
-    @Column(name = "PhTo")
-    private double phTo;
-    @Basic(optional = false)
-    @Column(name = "SoilMoistureFrom")
-    private int soilMoistureFrom;
-    @Basic(optional = false)
-    @Column(name = "SoilMoistureTo")
-    private int soilMoistureTo;
-    @JoinColumn(name = "AgePlantTypeID", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private AgePlantType agePlantTypeID;
+    @Column(name = "WaterAmountByHalfAnHour")
+    private double waterAmountByHalfAnHour;
+    @JoinColumn(name = "AgePlantType", referencedColumnName = "id")
+    @ManyToOne
+    private AgePlantType agePlantType;
 
 }

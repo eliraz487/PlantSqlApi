@@ -22,20 +22,20 @@ public class SensorTypeVSCheckController {
 
     @PostMapping("/save")
 
-    public String save(@jakarta.validation.Valid @RequestBody SensorTypeVSCheckVO vO) {
+    public String save(@Valid @RequestBody SensorTypeVSCheckVO vO) {
         return SensorTypeVSCheckService.save(vO).toString();
     }
 
     @DeleteMapping("")
 
-    public String delete(@jakarta.validation.Valid @com.sun.istack.NotNull @RequestParam Long id) {
+    public String delete(@Valid @com.sun.istack.NotNull @RequestParam Long id) {
         return SensorTypeVSCheckService.delete(id);
     }
 
     @PutMapping("")
 
-    public String update(@jakarta.validation.Valid @com.sun.istack.NotNull @RequestParam Long id,
-                         @jakarta.validation.Valid @RequestBody SensorTypeVSCheckVO vO) {
+    public String update(@Valid @com.sun.istack.NotNull @RequestParam Long id,
+                         @Valid @RequestBody SensorTypeVSCheckVO vO) {
         return SensorTypeVSCheckService.update(id, vO);
     }
 

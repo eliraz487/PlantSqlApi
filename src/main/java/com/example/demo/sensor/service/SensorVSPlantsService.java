@@ -1,9 +1,9 @@
 package com.example.demo.sensor.service;
 
 
-import com.example.demo.sensor.entity.SensorVSGroup;
-import com.example.demo.sensor.repository.SensorVSGroupRepository;
-import com.example.demo.sensor.vo.SensorVSGroupVO;
+import com.example.demo.sensor.entity.SensorVSPlants;
+import com.example.demo.sensor.repository.SensorVSPlantsRepository;
+import com.example.demo.sensor.vo.SensorVSPlantsVO;
 import com.google.gson.Gson;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,25 +14,25 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-public class SensorVSGroupService {
+public class SensorVSPlantsService {
 
     @Autowired
-    private SensorVSGroupRepository SensorVSGroupRepository;
+    private SensorVSPlantsRepository SensorVSPlantsRepository;
 
-    public SensorVSGroupService(SensorVSGroupRepository SensorVSGroupRepository) {
-        this.SensorVSGroupRepository = SensorVSGroupRepository;
+    public SensorVSPlantsService(SensorVSPlantsRepository SensorVSPlantsRepository) {
+        this.SensorVSPlantsRepository = SensorVSPlantsRepository;
     }
 
-    public String save(SensorVSGroupVO vO) {
+    public String save(SensorVSPlantsVO vO) {
         String validerror="";
         if (!(validerror=isValidation(vO)).equals("")){
             return "failed : "+"\n" +validerror;
         }
-        SensorVSGroup bean = new SensorVSGroup();
+        SensorVSPlants bean = new SensorVSPlants();
         BeanUtils.copyProperties(vO, bean);
         try {
             // code to save the entity
-            bean = SensorVSGroupRepository.save(bean);
+            bean = SensorVSPlantsRepository.save(bean);
         } catch (DataIntegrityViolationException ex) {
             return "failed : " + "\n" + ex.getMessage();
         }
@@ -45,50 +45,50 @@ public class SensorVSGroupService {
 
 
     public String delete(Long id) {
-        Optional<SensorVSGroup> optionalEntity = SensorVSGroupRepository.findById(id);
+        Optional<SensorVSPlants> optionalEntity = SensorVSPlantsRepository.findById(id);
         if (!optionalEntity.isPresent()) {
-            return "SensorVSGroup not found";
+            return "SensorVSPlants not found";
         }
-        SensorVSGroupRepository.delete(optionalEntity.get());
-        return "SensorVSGroup deleted successfully";
+        SensorVSPlantsRepository.delete(optionalEntity.get());
+        return "SensorVSPlants deleted successfully";
     }
 
 
-    public String update(Long id, SensorVSGroupVO vO) {
+    public String update(Long id, SensorVSPlantsVO vO) {
         String validerror="";
         if (!(validerror=isValidation(vO)).equals("")){
             return "failed : "+"\n" +validerror;
         }
-        SensorVSGroup bean = requireOne(id);
+        SensorVSPlants bean = requireOne(id);
         BeanUtils.copyProperties(vO, bean);
-        SensorVSGroupRepository.save(bean);
+        SensorVSPlantsRepository.save(bean);
         Gson gson=new Gson();
         return gson.toJson(vO);
     }
 
-    public SensorVSGroupVO getById(Long id) {
-        SensorVSGroup original = requireOne(id);
+    public SensorVSPlantsVO getById(Long id) {
+        SensorVSPlants original = requireOne(id);
         return toVO(original);
     }
 
 /*
-    public Page<SensorVSGroupVO> query(SensorVSGroupQueryVO vO) {
+    public Page<SensorVSPlantsVO> query(SensorVSPlantsQueryVO vO) {
         throw new UnsupportedOperationException();
     }
 */
 
-    private SensorVSGroupVO toVO(SensorVSGroup original) {
-        SensorVSGroupVO bean = new SensorVSGroupVO();
+    private SensorVSPlantsVO toVO(SensorVSPlants original) {
+        SensorVSPlantsVO bean = new SensorVSPlantsVO();
         BeanUtils.copyProperties(original, bean);
         return bean;
     }
 
-    private SensorVSGroup requireOne(Long id) {
-        return SensorVSGroupRepository.findById(id)
+    private SensorVSPlants requireOne(Long id) {
+        return SensorVSPlantsRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Resource not found: " + id));
     }
 
-    private String isValidation(SensorVSGroupVO vO) {
+    private String isValidation(SensorVSPlantsVO vO) {
         String result="";
         // TODO: 09/05/2023 add validation 
         return result;
